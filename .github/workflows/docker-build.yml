@@ -12,8 +12,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-
-      - name: Run docker-compose up
-
-        with:
-          compose-file: "./docker-compose.yml"
+      - name: Run docker-compose
+        run: |
+          docker-compose up
