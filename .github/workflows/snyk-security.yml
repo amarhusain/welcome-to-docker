@@ -1,0 +1,59 @@
+name: Snyk Security Scan
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  snyk-backend:
+    name: Snyk Security Scan - Backend
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+
+      - name: Install dependencies for backend
+        working-directory: ./backend
+        run: npm install
+
+      - name: Run Snyk to check for vulnerabilities in backend
+        uses: snyk/actions/node@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          command: test
+
+  snyk-frontend:
+    name: Snyk Security Scan - Frontend
+    runs-on: ubuntu-latest
+    needs: snyk-backend
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+
+      - name: Install dependencies for frontend
+        working-directory: ./frontend
+        run: npm install
+
+      - name: Run Snyk to check for vulnerabilities in frontend
+        uses: snyk/actions/node@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          command: test
