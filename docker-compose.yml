@@ -4,7 +4,7 @@ services:
     build:
       context: ./backend
       dockerfile: ./Dockerfile
-    image: "/backend-img"
+    image: "backend-img"
     ports:
       - "8080:8080"
   frontend:
