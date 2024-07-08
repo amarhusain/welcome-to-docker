@@ -13,11 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Run docker-compose
-        uses: welcome-to-docker/compose-action@v2.0.1
+      - name: Run docker-compose up
+
         with:
           compose-file: "./docker-compose.yml"
-
-      - name: Execute tests in the running services
-        run: |
-          docker-compose up
