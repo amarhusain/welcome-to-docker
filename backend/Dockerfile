@@ -1,15 +1,38 @@
-FROM node:12.2
+# Stage 1: Build the TypeScript code
+FROM node:16 AS build
 
-ENV HOME=/home/app
+# Set the working directory
+WORKDIR /app
 
-RUN apt-get update && apt-get install htop
+# Copy package.json and package-lock.json
+COPY package*.json ./
 
-COPY package.json package-lock.json $HOME/node_docker/
+# Install dependencies
+RUN npm install
 
-WORKDIR $HOME/node_docker
+# Copy the rest of the application
+COPY . .
 
-RUN npm install --silent --progress=false
+# Compile the TypeScript code
+RUN npm run build
 
-COPY . $HOME/node_docker
+# Stage 2: Run the application
+FROM node:16-alpine
 
-CMD ["npm", "start"]
+# Set the working directory
+WORKDIR /app
+
+# Copy the package.json and package-lock.json files again to install production dependencies
+COPY package*.json ./
+
+# Install only production dependencies
+RUN npm install --only=production
+
+# Copy the compiled code from the previous stage
+COPY --from=build /app/dist ./dist
+
+# Expose the port the app runs on
+EXPOSE 3000
+
+# Command to run the application
+CMD ["node", "dist/index.js"]
