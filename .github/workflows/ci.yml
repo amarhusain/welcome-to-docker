@@ -81,7 +81,7 @@ jobs:
 
       - name: Build and push backend image
         run: |
-          docker build -f ./backend/Dockerfile -t my-backend-image:latest . 
+          docker build -f ./backend/Dockerfile -t my-backend-image:latest  --build-arg SERVER_PORT=${{ secrets.BE_SERVER_PORT }} . 
           docker tag my-backend-image:latest amarhusain/my-test-repo:my-backend-image-latest
           docker push amarhusain/my-test-repo:my-backend-image-latest 
 

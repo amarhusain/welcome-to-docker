@@ -15,6 +15,12 @@ app.get('/health', (req: Request, res: Response) => {
     res.status(200).send({ message, timestamp });
 });
 
+app.get('/', (req: Request, res: Response) => {
+    const message = `Server is running at http://localhost:${process.env.SERVER_PORT}`;
+    const timestamp = new Date().toLocaleString();
+    res.status(200).send({ message, timestamp });
+});
+
 
 (async () => {
     try {
