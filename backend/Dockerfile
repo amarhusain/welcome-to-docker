@@ -1,5 +1,5 @@
 # Stage 1: Build the TypeScript code
-FROM node:18-Alpine AS build
+FROM node:18-alpine AS build
 
 # Set the working directory
 WORKDIR /app
