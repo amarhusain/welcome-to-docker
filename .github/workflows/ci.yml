@@ -23,11 +23,8 @@ jobs:
         with:
           node-version: '18'
 
-      - name: List files in workspace directory
-        run: ls -la /github/workspace
-
       - name: Install dependencies for backend
-        working-directory: /github/workspace/backend  # Ensure this is the correct path
+        working-directory: ${GITHUB_WORKSPACE}  # Ensure this is the correct path
         run: npm install
 
       - name: Run Snyk to check for vulnerabilities in backend
