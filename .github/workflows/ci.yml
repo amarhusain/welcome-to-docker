@@ -50,7 +50,7 @@ jobs:
           node-version: '18'
 
       - name: Install dependencies for frontend
-        working-directory: ./frontend
+        working-directory: ${{ github.workspace }}/frontend
         run: npm install
 
       - name: Run Snyk to check for vulnerabilities in frontend
