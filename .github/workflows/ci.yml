@@ -38,7 +38,6 @@ jobs:
   snyk-frontend:
     name: Snyk Security Scan - Frontend
     runs-on: ubuntu-latest
-    needs: snyk-backend
 
     steps:
       - name: Checkout code
@@ -82,10 +81,10 @@ jobs:
 
       - name: Build and push backend image
         run: |
-          docker-compose -f ./backend/docker-compose.yml build
-          docker-compose -f ./backend/docker-compose.yml push
+          docker build -f ./backend/Dockerfile -t my-backend-image:latest . 
+          docker push my-backend-image:latest 
 
       - name: Build and push frontend image
         run: |
-          docker-compose -f ./frontend/docker-compose.yml build
-          docker-compose -f ./frontend/docker-compose.yml push
+          docker build -f ./frontend/Dockerfile -t my-frontend-image:latest
+          docker push my-frontend-image:latest
