@@ -1,0 +1,8 @@
+# Node modules and other unwanted files
+node_modules
+dist
+*.log
+.git
+.gitignore
+docker-compose.yml
+README.md
