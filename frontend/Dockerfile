@@ -16,8 +16,18 @@ COPY frontend/ ./
 # Build the Angular application
 RUN npm run build --prod
 
+
+# Stage 2: Serve the Angular application
+FROM nginx:alpine
+
+# Copy the built app from Stage 1
+COPY --from=build /app/dist/frontend /usr/share/nginx/html
+
+# Copy nginx configuration file (if needed)
+# COPY nginx.conf /etc/nginx/nginx.conf
+
 # Expose port 80
 EXPOSE 4200
 
-# Start app
-CMD ["ng", "serve"]
+# Command to start nginx
+CMD ["nginx", "-g", "daemon off;"]
