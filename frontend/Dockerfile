@@ -5,13 +5,13 @@ FROM node:18-alpine AS build
 WORKDIR /app
 
 # Copy package.json and package-lock.json
-COPY package.json package-lock.json ./
+COPY frontend/package.json frontend/package-lock.json ./
 
 # Install dependencies
 RUN npm install
 
 # Copy the entire application code
-COPY . .
+COPY frontend/ ./
 
 # Build the Angular application
 RUN npm run build --prod
