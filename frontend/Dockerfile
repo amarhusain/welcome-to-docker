@@ -19,5 +19,5 @@ RUN npm run build --prod
 # Expose port 80
 EXPOSE 4200
 
-# Start Nginx server
+# Start app
 CMD ["ng", "serve"]
