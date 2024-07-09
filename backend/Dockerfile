@@ -2,33 +2,33 @@
 FROM node:18-alpine AS build
 
 # Set the working directory
-WORKDIR /app
+WORKDIR /usr/src/app
 
 # Copy package.json and package-lock.json
-COPY package*.json /app
-
-# Install dependencies
-RUN npm install
+COPY package*.json ./
 
 # Copy the rest of the application
 COPY . .
 
+# Install dependencies
+RUN npm install
+
 # Compile the TypeScript code
 RUN npm run build
+
+
 
 # Stage 2: Run the application
 FROM node:18-alpine
 
 # Set the working directory
-WORKDIR /app
-
-# Copy only the build output and package files
-COPY --from=build /app/package.json /app/package-lock.json ./
-COPY --from=build /app/dist ./dist
+WORKDIR /usr/src/app
+COPY package*.json ./
 
 # Install only production dependencies
-RUN npm ci --only=production
+RUN npm install --only=production
 
+COPY --from=0 /usr/src/app/dist ./dist
 
 # Expose the port the app runs on
 EXPOSE 3000

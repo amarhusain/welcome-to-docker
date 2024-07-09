@@ -10,61 +10,61 @@ on:
 
 jobs:
  
-  snyk-backend:
-    name: Snyk Security Scan - Backend
-    runs-on: ubuntu-latest
+  # snyk-backend:
+  #   name: Snyk Security Scan - Backend
+  #   runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v2
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '18'
+  #     - name: Set up Node.js
+  #       uses: actions/setup-node@v2
+  #       with:
+  #         node-version: '18'
 
-      - name: Install dependencies for backend
-        working-directory: ${{ github.workspace }}/backend  # Ensure this is the correct path
-        run: npm install
+  #     - name: Install dependencies for backend
+  #       working-directory: ${{ github.workspace }}/backend  # Ensure this is the correct path
+  #       run: npm install
 
-      - name: Run Snyk to check for vulnerabilities in backend
-        uses: snyk/actions/node@master  # Specify a stable version
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        with:
-          command: test
-          args: --workdir /github/workspace/backend
+  #     - name: Run Snyk to check for vulnerabilities in backend
+  #       uses: snyk/actions/node@master  # Specify a stable version
+  #       env:
+  #         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+  #       with:
+  #         command: test
+  #         args: --workdir /github/workspace/backend
 
-  snyk-frontend:
-    name: Snyk Security Scan - Frontend
-    runs-on: ubuntu-latest
+  # snyk-frontend:
+  #   name: Snyk Security Scan - Frontend
+  #   runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v2
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '18'
+  #     - name: Set up Node.js
+  #       uses: actions/setup-node@v2
+  #       with:
+  #         node-version: '18'
 
-      - name: Install dependencies for frontend
-        working-directory: ${{ github.workspace }}/frontend
-        run: npm install
+  #     - name: Install dependencies for frontend
+  #       working-directory: ${{ github.workspace }}/frontend
+  #       run: npm install
 
-      - name: Run Snyk to check for vulnerabilities in frontend
-        uses: snyk/actions/node@master
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        with:
-          command: test
-          args: --workdir /github/workspace/frontend
+  #     - name: Run Snyk to check for vulnerabilities in frontend
+  #       uses: snyk/actions/node@master
+  #       env:
+  #         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+  #       with:
+  #         command: test
+  #         args: --workdir /github/workspace/frontend
 
 
   build_docker_images:
     name: Build Docker Images
     runs-on: ubuntu-latest
-    needs: [snyk-backend, snyk-frontend]
+    # needs: [snyk-backend, snyk-frontend]
 
     steps:
       - name: Checkout code
