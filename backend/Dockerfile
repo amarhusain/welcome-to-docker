@@ -5,13 +5,13 @@ FROM node:18-alpine AS build
 WORKDIR /app
 
 # Copy package.json and package-lock.json
-COPY package.json package-lock.json ./
+COPY backend/package.json backend/package-lock.json ./
 
 # Install dependencies
 RUN npm install
 
 # Copy the rest of the application
-COPY . .
+COPY backend/ ./
 
 # Compile the TypeScript code
 RUN npm run build
