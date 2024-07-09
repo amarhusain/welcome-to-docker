@@ -2,7 +2,7 @@
 FROM node:18-alpine AS build
 
 # Set the working directory
-WORKDIR /usr/src/app
+WORKDIR /app
 
 # Copy package.json and package-lock.json
 COPY package*.json ./
@@ -22,13 +22,14 @@ RUN npm run build
 FROM node:18-alpine
 
 # Set the working directory
-WORKDIR /usr/src/app
-COPY package*.json ./
+WORKDIR /app
 
-# Install only production dependencies
-RUN npm install --only=production
+# Copy only the build output and package files
+COPY --from=build /app/package*.json ./
+COPY --from=build /app/dist ./dist
 
-COPY --from=0 /usr/src/app/dist ./dist
+# Install production dependencies
+RUN npm ci --only=production
 
 # Expose the port the app runs on
 EXPOSE 3000
