@@ -31,7 +31,7 @@ jobs:
         run: npm install
 
       - name: Run Snyk to check for vulnerabilities in backend
-        uses: snyk/actions/node@v1.5.0  # Specify a stable version
+        uses: snyk/actions/node@master  # Specify a stable version
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
