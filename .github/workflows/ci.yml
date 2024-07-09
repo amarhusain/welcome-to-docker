@@ -82,7 +82,8 @@ jobs:
       - name: Build and push backend image
         run: |
           docker build -f ./backend/Dockerfile -t my-backend-image:latest . 
-          docker push my-backend-image:latest 
+          docker tag my-backend-image:latest amar.husain156@gmail.com/my-backend-image:latest
+          docker push amar.husain156@gmail.com/my-backend-image:latest 
 
       # - name: Build and push frontend image
       #   run: |
