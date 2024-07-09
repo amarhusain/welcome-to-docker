@@ -16,20 +16,19 @@ COPY . .
 # Compile the TypeScript code
 RUN npm run build
 
-# # Stage 2: Run the application
-# FROM node:18-alpine
+# Stage 2: Run the application
+FROM node:18-alpine
 
-# # Set the working directory
-# WORKDIR /app
+# Set the working directory
+WORKDIR /app
 
-# # Copy the package.json and package-lock.json files again to install production dependencies
-# COPY package*.json ./
+# Copy only the build output and package files
+COPY --from=build /app/package.json /app/package-lock.json ./
+COPY --from=build /app/dist ./dist
 
-# # Install only production dependencies
-# RUN npm install --only=production
+# Install only production dependencies
+RUN npm ci --only=production
 
-# # Copy the compiled code from the previous stage
-# COPY --from=build /app/dist ./dist
 
 # Expose the port the app runs on
 EXPOSE 3000
