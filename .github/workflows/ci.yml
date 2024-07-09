@@ -59,7 +59,7 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
           command: test
-           args: --workdir /github/workspace/frontend
+          args: --workdir /github/workspace/frontend
 
 
   build_docker_images:
